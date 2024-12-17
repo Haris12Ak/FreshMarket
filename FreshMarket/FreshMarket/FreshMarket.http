@@ -1,0 +1,6 @@
+@FreshMarket_HostAddress = http://localhost:5148
+
+GET {{FreshMarket_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
