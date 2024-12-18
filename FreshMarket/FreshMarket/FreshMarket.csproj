@@ -29,8 +29,4 @@
     <ProjectReference Include="..\FreshMarket.Services\FreshMarket.Services.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>

@@ -1,5 +1,7 @@
 using FreshMarket.Services;
 using FreshMarket.Services.Database;
+using FreshMarket.Services.Interfaces;
+using FreshMarket.Services.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +19,11 @@ builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(connectionString));
+
+builder.Services.AddTransient<ICountryService, CountryService>();
+builder.Services.AddTransient<ICityService, CityService>();
+
+builder.Services.AddAutoMapper(typeof(CountryService));
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
