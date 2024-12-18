@@ -5,6 +5,8 @@ VisualStudioVersion = 17.8.34408.163
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreshMarket", "FreshMarket\FreshMarket.csproj", "{31B477C5-D7FF-4E8B-A2B7-E6D8322A2C95}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreshMarket.Services", "FreshMarket.Services\FreshMarket.Services.csproj", "{D4B7EDAF-5460-4B70-B39A-4C1CD702B270}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{31B477C5-D7FF-4E8B-A2B7-E6D8322A2C95}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31B477C5-D7FF-4E8B-A2B7-E6D8322A2C95}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31B477C5-D7FF-4E8B-A2B7-E6D8322A2C95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4B7EDAF-5460-4B70-B39A-4C1CD702B270}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4B7EDAF-5460-4B70-B39A-4C1CD702B270}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4B7EDAF-5460-4B70-B39A-4C1CD702B270}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4B7EDAF-5460-4B70-B39A-4C1CD702B270}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
