@@ -37,7 +37,7 @@ The Dashboard page provides an overview of all relevant information for both adm
 ### 1. Clone the repository:
 
 ```bash
-git clone https://github.com/Nodi123Or/Fresh.git
+git clone https://github.com/Haris12Ak/FreshMarket.git
 ```
 
 ### 2. Install Frontend Dependencies
@@ -53,6 +53,11 @@ npm install
 The project uses Docker Compose to run the backend services, database, and Keycloak.
 Make sure you have Docker Desktop or Docker Engine installed, then run:
 
+```bash
+cd Fresh
+```
+ ---
+ 
 ```bash
 docker-compose up --build
 ```
