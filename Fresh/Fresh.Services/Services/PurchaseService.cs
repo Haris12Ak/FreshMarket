@@ -210,10 +210,14 @@ namespace Fresh.Services.Services
             if (!isOwnerOfCompany)
                 throw new Exception("Unable to access data, or companyId does not exist !");
 
-            var purchase = await _context.Purchase.FindAsync(purchaseId);
+            var purchase = await _context.Purchase
+                .Include(p => p.Payments)
+                .FirstOrDefaultAsync(x => x.Id == purchaseId);
 
             if (purchase == null)
                 throw new Exception("Purchase with selected ID does not exist !");
+
+            _context.Payment.RemoveRange(purchase.Payments);
 
             _context.Purchase.Remove(purchase);
             await _context.SaveChangesAsync();
