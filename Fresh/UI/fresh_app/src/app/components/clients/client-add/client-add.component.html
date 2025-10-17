@@ -1,0 +1,60 @@
+<div class="navigation-bar-text-display">
+    <p class="appearance main" (click)="cancel()">Clients</p>
+    <p class="appearance">/</p>
+    <p class="appearance">Add</p>
+</div>
+<form class="example-form" [formGroup]="addClientForms" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <mat-form-field appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input matInput placeholder="Enter first name" name="firstName" formControlName="firstName"
+                [errorStateMatcher]="matcher">
+            @if (addClientForms.controls['firstName'].hasError('pattern') &&
+            !addClientForms.controls['firstName'].hasError('required')){
+            <mat-error>First Name must begin with a capital letter !</mat-error>
+            }
+            @if(addClientForms.controls['firstName'].hasError('required')){
+            <mat-error>First name is <strong>required !</strong></mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input matInput placeholder="Enter last name" name="lastName" formControlName="lastName"
+                [errorStateMatcher]="matcher">
+            @if (addClientForms.controls['lastName'].hasError('pattern') &&
+            !addClientForms.controls['lastName'].hasError('required')){
+            <mat-error>Last Name must begin with a capital letter !</mat-error>
+            }
+            @if(addClientForms.controls['lastName'].hasError('required')){
+            <mat-error>Last name is <strong>required !</strong></mat-error>
+            }
+        </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" placeholder="Enter email" name="email" formControlName="email"
+            placeholder="Ex. user@example.com" [errorStateMatcher]="matcher">
+        @if (addClientForms.controls['email'].hasError('pattern') &&
+        !addClientForms.controls['email'].hasError('required')){
+        <mat-error>Please enter a valid email address !</mat-error>
+        }
+        @if(addClientForms.controls['email'].hasError('required')){
+        <mat-error>Email is <strong>required !</strong></mat-error>
+        }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Phone</mat-label>
+        <input matInput placeholder="Enter phone" name="phone" formControlName="phone" [errorStateMatcher]="matcher">
+        @if (addClientForms.controls['phone'].hasError('pattern')){
+        <mat-error>Invalid phone number format !</mat-error>
+        }
+    </mat-form-field>
+
+    <div class="actions">
+        <button mat-raised-button color="primary" type="submit" [disabled]="!addClientForms.valid"><mat-icon>archive</mat-icon>Save</button>
+        <button mat-button color="warn" type="button" (click)="cancel()"><mat-icon>cancel</mat-icon>Cancel</button>
+    </div>
+</form>

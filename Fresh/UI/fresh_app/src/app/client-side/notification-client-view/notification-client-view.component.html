@@ -1,0 +1,26 @@
+<div *ngIf="loading" class="spinner-container">
+    <mat-spinner></mat-spinner>
+</div>
+
+<div *ngIf="!loading">
+    <div class="navigation-bar-text-display">
+        <p class="appearance">Notification</p>
+    </div>
+    <div *ngIf="notifications && notifications.length > 0; else noNotifications">
+        <div class="container" matTooltip="Show details" *ngFor="let item of notifications" (click)="showDetails(item)">
+            <h3>{{item.title}}</h3>
+            <p id="date">{{item.createdAt | date:'dd MMM yyyy HH:mm a'}}</p>
+            <p id="content">{{item.content}}</p>
+        </div>
+        <div *ngIf="pagedResult">
+            <mat-paginator [length]="pagedResult!.totalItems" [pageSize]="pagedResult!.pageSize"
+                [pageIndex]="pagedResult.currentPage" [pageSizeOptions]="[5, 10, 25]" (page)="onPageChange($event)"
+                aria-label="Select page">
+            </mat-paginator>
+        </div>
+    </div>
+
+    <ng-template #noNotifications>
+        <p class="result-view">There are currently no notifications.</p>
+    </ng-template>
+</div>

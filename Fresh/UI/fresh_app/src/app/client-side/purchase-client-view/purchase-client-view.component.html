@@ -1,0 +1,182 @@
+<div *ngIf="loading" class="spinner-container">
+    <mat-spinner></mat-spinner>
+</div>
+
+<div *ngIf="!loading">
+    <div class="navigation-bar-text-display">
+        <p class="appearance">Purchase</p>
+    </div>
+    @if (purchasesClient && purchasesClient.length > 0) {
+
+
+    <div *ngFor="let clientInfo of purchasesClient">
+        <div class="search">
+            <mat-form-field class="no-subscript">
+                <mat-label>Product type</mat-label>
+                <mat-select [(ngModel)]="clientInfo.searchPurchases.productType">
+                    @for (producType of productTypes; track producType){
+                    <mat-option [value]="producType.name">{{producType.name}}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="no-subscript">
+                <mat-label>Date From</mat-label>
+                <input matInput [matDatepicker]="pickerFrom" [(ngModel)]="clientInfo.searchPurchases.dateFrom"
+                    name="dateFrom" placeholder="Choose a date">
+                <mat-datepicker-toggle matIconSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+                <mat-datepicker #pickerFrom></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field class="no-subscript">
+                <mat-label>Date To</mat-label>
+                <input matInput [matDatepicker]="pickerTo" [(ngModel)]="clientInfo.searchPurchases.dateTo" name="dateTo"
+                    placeholder="Choose a date">
+                <mat-datepicker-toggle matIconSuffix [for]="pickerTo"></mat-datepicker-toggle>
+                <mat-datepicker #pickerTo></mat-datepicker>
+            </mat-form-field>
+
+            <div class="buttons">
+                <button mat-icon-button color="primary" matTooltip="Search" (click)="Search(clientInfo)"><mat-icon>search</mat-icon></button>
+                <button mat-icon-button color="warn" matTooltip="Reset filter" (click)="ResetFilter(clientInfo)"><mat-icon>autorenew</mat-icon></button>
+            </div>
+        </div>
+        <br>
+        <div class="container">
+            <div class="container-left">
+                <div class="content">
+                    <label>Total purchases:</label>
+                    <p>{{clientInfo.totalPurchases}}</p>
+                </div>
+                <div class="content">
+                    <label>Total quantity:</label>
+                    <p>{{clientInfo.totalQuantity}}</p>
+                </div>
+                <div class="content">
+                    <label>Total earnings:</label>
+                    <p>{{clientInfo.totalEarnings}} KM</p>
+                </div>
+            </div>
+            <div class="container-right">
+                <div class="content">
+                    <label>Most sold product:</label>
+                    <p>{{clientInfo.mostSoldProduct}}</p>
+                </div>
+                <div class="content">
+                    <label>Last purchase date:</label>
+                    <p>{{clientInfo.lastPurchaseDate | date:'MMM d, y, h:mm a'}}</p>
+                </div>
+                <div class="content">
+                    <label style="color: rgba(0, 104, 0, 0.6);">Total paid:</label>
+                    <p style="color: rgba(0, 104, 0, 0.6);">{{clientInfo.totalPaid}} KM</p>
+                </div>
+                <div class="content">
+                    <label style="color: rgba(128, 0, 0, 0.6);">Total debt:</label>
+                    <p style="color: rgba(128, 0, 0, 0.6);">{{clientInfo.totalDebt}} KM</p>
+                </div>
+                <div class="paid-unpaid">
+                    <div class="content">
+                        <div class="box paid"></div>
+                        <p style="color: rgba(0, 104, 0, 0.6);">Paid</p>
+                    </div>
+                    <div class="content">
+                        <div class="box unpaid"></div>
+                        <p style="color: rgba(128, 0, 0, 0.6);">Unpaid</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-filtered" *ngIf="purchaseFilteredData && purchaseFilteredData != undefined">
+            <span>Filtered purchase data</span>
+            <div style="display: flex; flex-direction: row; gap: 20px; text-align: center; align-items: center;">
+                <label class="filtered-result-text">Filtered data by:</label>
+                <label *ngIf="clientInfo.searchPurchases.productType != undefined" class="filtered-result-text">Product
+                    type: {{clientInfo.searchPurchases.productType}}</label>
+                <label *ngIf="clientInfo.searchPurchases.dateFrom != undefined" class="filtered-result-text">Date From:
+                    {{clientInfo.searchPurchases.dateFrom | date: 'mediumDate'}}</label>
+                <label *ngIf="clientInfo.searchPurchases.dateTo != undefined" class="filtered-result-text">Date To:
+                    {{clientInfo.searchPurchases.dateTo | date: 'mediumDate'}}</label>
+            </div>
+            <mat-divider></mat-divider>
+            <div style="display: flex;">
+                <div class="container-left">
+                    <div class="content">
+                        <label>Total purchases:</label>
+                        <p>{{purchaseFilteredData.totalPurchases}}</p>
+                    </div>
+                    <div class="content">
+                        <label>Total quantity:</label>
+                        <p>{{purchaseFilteredData.totalQuantity}}</p>
+                    </div>
+                    <div class="content">
+                        <label>Total earnings:</label>
+                        <p>{{purchaseFilteredData.totalEarnings}} KM</p>
+                    </div>
+                </div>
+                <div class="container-right">
+                    <div class="content">
+                        <label>Most sold product:</label>
+                        <p>{{purchaseFilteredData.mostSoldProduct}}</p>
+                    </div>
+                    <div class="content">
+                        <label style="color: rgba(0, 104, 0, 0.6);">Total paid:</label>
+                        <p style="color: rgba(0, 104, 0, 0.6);">{{purchaseFilteredData.totalPaid}} KM</p>
+                    </div>
+                    <div class="content">
+                        <label style="color: rgba(128, 0, 0, 0.6);">Total debt:</label>
+                        <p style="color: rgba(128, 0, 0, 0.6);">{{purchaseFilteredData.totalDebt}} KM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table *ngIf="clientInfo.purchases && clientInfo.purchases.length; else noPurchases">
+            <thead>
+                <tr>
+                    <th>Product name</th>
+                    <th>Product type</th>
+                    <th>Image</th>
+                    <th>Unit</th>
+                    <th>Price per unit</th>
+                    <th>Quantity</th>
+                    <th>Total amount</th>
+                    <th>Purchase date</th>
+                    <th>Payment type</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let purchase of clientInfo.purchases"
+                    [ngClass]="isPurchasePaid(purchase) ? 'paid-row' : 'unpaid-row'">
+                    <td>{{ purchase.products.name }}</td>
+                    <td>{{ purchase.products.productType.name }}</td>
+                    <td><img alt="Product Image" [src]="getImageSrc(purchase.products.image ?? null)" width="50"
+                            height="50" /></td>
+                    <td>{{ purchase.products.unit }}</td>
+                    <td>{{ purchase.pricePerUnit}} KM</td>
+                    <td>{{ purchase.quantity }}</td>
+                    <td>{{ purchase.totalAmount}} KM</td>
+                    <td>{{purchase.purchaseDate | date:'mediumDate' }}</td>
+                    <td>{{ purchase.paymentType}}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="details" mat-icon-button matTooltip="Details" (click)="ShowDetails(purchase.id)"><mat-icon>read_more</mat-icon></button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div *ngIf="clientInfo.pagedPurchases">
+            <mat-paginator [length]="clientInfo.pagedPurchases.totalItems"
+                [pageSize]="clientInfo.pagedPurchases.pageSize" [pageIndex]="clientInfo.pagedPurchases.currentPage"
+                [pageSizeOptions]="[5, 10, 25]" (page)="onPageChangePurchases($event, clientInfo)"
+                aria-label="Select page">
+            </mat-paginator>
+        </div>
+        <ng-template #noPurchases>
+            <p class="result-view">No search results</p>
+        </ng-template>
+    </div>
+    }@else {
+    <p class="result-view">You currently have no purchases.</p>
+    }
+</div>

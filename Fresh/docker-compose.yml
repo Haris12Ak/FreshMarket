@@ -1,0 +1,108 @@
+version: '3.4'
+services:
+  rabbitmq:
+    image: rabbitmq:4-management
+    container_name: Rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    expose:
+      - 5672
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - fresh
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0.3
+    container_name: Keycloak
+    command: start-dev --import-realm
+    environment:
+      - KC_HEALTH_ENABLED=true
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+    volumes:
+      - ./fresh-realm.json:/opt/keycloak/data/import/fresh-realm.json
+    ports:
+      - 9090:8080
+    networks:
+      - fresh
+
+  mailing-service:
+    restart: unless-stopped
+    container_name: EmailService
+    build:
+      context: .
+      dockerfile: Fresh.MailService/Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - type: bind
+        source: ./ .env
+        target: /app/.env
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      fresh-sql:
+        condition: service_started
+      fresh-api:
+        condition: service_started
+    ports:
+      - 7061:7061
+    expose:
+      - 7061
+    networks:
+      - fresh
+
+  fresh-sql:
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=QWElkj132!
+      - MSSQL_PID=Developer
+    ports:
+      - 1401:1433
+    expose:
+      - 1433
+    networks:
+      - fresh
+
+  fresh-api:
+    restart: unless-stopped
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: Fresh-api
+    env_file:
+      - .env
+    volumes:
+      - type: bind
+        source: ./ .env
+        target: /app/.env
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings:DefaultConnection=Server=fresh-sql,1433;Database=FreshFb;User=sa;Password=QWElkj132!;ConnectRetryCount=0;TrustServerCertificate=True
+      - ASPNETCORE_URLS=http://+:44301
+      - Keycloak:BaseUrl=http://keycloak:8080
+      - Swagger:OAuth2RedirectUrl=http://localhost:44301/swagger/oauth2-redirect.html
+      - RABBITMQ_HOST=rabbitmq
+    ports:
+      - 44301:44301
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      keycloak:
+        condition: service_started
+      fresh-sql:
+        condition: service_started
+    networks:
+      - fresh
+
+networks:
+  fresh:
+    driver: bridge   

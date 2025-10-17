@@ -1,0 +1,80 @@
+<div *ngIf="loading" class="spinner-container">
+    <mat-spinner></mat-spinner>
+</div>
+
+<div *ngIf="!loading">
+    <div class="navigation-bar-text-display">
+        <p class="appearance main" (click)="cancel()">Products</p>
+        <p class="appearance">/</p>
+        <p class="appearance">Details</p>
+    </div>
+    <div class="details-container">
+        <div class="left-container">
+            <img alt="Product Image" [src]="getImageSrc(product.image ?? null)">
+        </div>
+
+        <div class="right-container">
+            <div class="content">
+                <label>Name:</label>
+                <p>{{product.name}}</p>
+            </div>
+            <div class="content">
+                <label>Product type:</label>
+                <p>{{product.productType.name}}</p>
+            </div>
+            <div class="content">
+                <label>Current price:</label>
+                <p>{{product.currentPricePerUnit ?? ' - '}} KM</p>
+            </div>
+            <div class="content">
+                <label>Unit:</label>
+                <p>{{product.unit}}</p>
+            </div>
+            <div class="content">
+                <label>Active:</label>
+                <p>{{product.isActive ? 'Yes' : 'No'}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="product-price-container">
+        <div class="view-section">
+            <p>View product price history</p>
+            <button (click)="ChangeProductPrice(product)" mat-raised-button class="product-price-button"><mat-icon>add</mat-icon>Change the
+                product
+                price</button>
+        </div>
+        <div class="search-container">
+            <mat-form-field class="no-subscript">
+                <mat-label>Choose a date</mat-label>
+                <input matInput [matDatepicker]="picker" [(ngModel)]="search.date" name="date">
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button mat-icon-button color="primary" matTooltip="Search" (click)="Search()"><mat-icon>search</mat-icon></button>
+                <button mat-icon-button color="warn" matTooltip="Reset filter" (click)="ResetFilter()"><mat-icon>autorenew</mat-icon></button>
+            </div>
+        </div>
+        <div class="product-price-header">
+            <h3>Price per unit</h3>
+            <h3>Effective form</h3>
+            <span></span>
+        </div>
+        <div *ngFor="let item of productPrices" class="product-price-content">
+            <p>{{item.pricePerUnit}} KM</p>
+            <p>{{item.effectiveFrom | date: 'MMM d, y, h:mm a'}}</p>
+            <div style="display: flex; gap: 10px; justify-content: flex-end; align-items: end;">
+                <button *ngIf="item.pricePerUnit != product.currentPricePerUnit" mat-icon-button color="primary" matTooltip="Set price"
+                    (click)="SetPrice(item)"><mat-icon>settings_backup_restore</mat-icon></button>
+                <button mat-icon-button color="warn" matTooltip="Delete" (click)="Delete(item.id)"><mat-icon>delete_forever</mat-icon></button>
+            </div>
+        </div>
+        <div *ngIf="pagedResult">
+            <mat-paginator [length]="pagedResult!.totalItems" [pageSize]="pagedResult!.pageSize"
+                [pageIndex]="pagedResult.currentPage" [pageSizeOptions]="[5, 10, 25]" (page)="onPageChange($event)"
+                aria-label="Select page">
+            </mat-paginator>
+        </div>
+    </div>
+</div>

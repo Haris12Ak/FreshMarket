@@ -1,0 +1,51 @@
+<div class="navigation-bar-text-display">
+  <p class="appearance main" (click)="cancel()">Products</p>
+  <p class="appearance">/</p>
+  <p class="appearance">Edit</p>
+</div>
+<form class="example-form" [formGroup]="editProductForms" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Name</mat-label>
+    <input matInput name="name" formControlName="name" [errorStateMatcher]="matcher">
+    @if(editProductForms.controls['name'].hasError('required')){
+    <mat-error>Name is <strong>required !</strong></mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field class="select">
+    <mat-label>Unit</mat-label>
+    <mat-select name="unit" formControlName="unit" required>
+      @for (unit of unitsType; track unit){
+      <mat-option [value]="unit">{{unitTypeLabel(unit)}}</mat-option>
+      }
+    </mat-select>
+    @if(editProductForms.controls['unit'].hasError('required')){
+    <mat-error>Unit is <strong>required !</strong></mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field class="select">
+    <mat-label>Product type</mat-label>
+    <mat-select name="productTypeId" formControlName="productTypeId" required>
+      @for (producType of productTypes; track producType){
+      <mat-option [value]="producType.id">{{producType.name}}</mat-option>
+      }
+    </mat-select>
+    @if(editProductForms.controls['productTypeId'].hasError('required')){
+    <mat-error>Product type is <strong>required !</strong></mat-error>
+    }
+  </mat-form-field>
+
+  <div class="image-container">
+    <label>Image</label>
+    <img alt="Product Image" [src]="previewUrl || getImageSrc(product.image || null)">
+    <input type="file" (change)="onFileSelected($event)" />
+  </div>
+
+  <mat-slide-toggle formControlName="isActive" class="custom-toggle" color="primary">Aktivan</mat-slide-toggle>
+
+  <div class="actions">
+    <button mat-raised-button color="primary" type="submit" [disabled]="!editProductForms.valid"><mat-icon>archive</mat-icon>Save</button>
+    <button mat-button color="warn" type="button" (click)="cancel()"><mat-icon>cancel</mat-icon>Cancel</button>
+  </div>
+</form>

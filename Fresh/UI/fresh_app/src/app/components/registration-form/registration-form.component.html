@@ -1,0 +1,115 @@
+<div id="main-page">
+    <div id="registration-page">
+        <h1>Registration</h1>
+        <p>Enter your details to register</p>
+
+        <h2>Company Data</h2>
+
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div class="text-input">
+                <label for="">Name:</label>
+                <input name="companyName" formControlName="companyName" type="text">
+                <div class="text-danger"
+                    *ngIf="registerForm.controls['companyName'].invalid && (registerForm.controls['companyName'].touched || registerForm.controls['companyName'].dirty || submitted)">
+                    <span *ngIf="registerForm.controls['companyName'].errors?.['required']">This Is Required !</span>
+                    <span *ngIf="registerForm.controls['companyName'].errors?.['minlength']">Please enter your correct
+                        Company name !</span>
+                </div>
+            </div>
+            <div class="text-input">
+                <label for="">Address:</label>
+                <input name="companyAddress" formControlName="companyAddress" type="text">
+                <div class="text-danger"
+                    *ngIf="registerForm.controls['companyAddress'].invalid && (registerForm.controls['companyAddress'].touched || registerForm.controls['companyAddress'].dirty || submitted)">
+                    <span *ngIf="registerForm.controls['companyAddress'].errors?.['required']">This Is Required !</span>
+                    <span *ngIf="registerForm.controls['companyAddress'].errors?.['minlength']">Please enter your
+                        correct
+                        Company address !</span>
+                </div>
+
+            </div>
+            <div class="text-input">
+                <label for="">Phone:</label>
+                <input name="phone" formControlName="phone" type="text">
+                <div class="text-danger"
+                    *ngIf="registerForm.controls['phone'].invalid && (registerForm.controls['phone'].touched || registerForm.controls['phone'].dirty || submitted)">
+                    <span *ngIf="registerForm.controls['phone'].errors?.['pattern']">Invalid phone number
+                        format !</span>
+                </div>
+
+            </div>
+            <div class="text-input">
+                <label for="">Email:</label>
+                <input name="email" formControlName="email" type="text">
+                <div class="text-danger"
+                    *ngIf="registerForm.controls['email'].invalid && (registerForm.controls['email'].touched || registerForm.controls['email'].dirty || submitted)">
+                    <span *ngIf="registerForm.controls['email'].errors?.['required']">This Is Required !</span>
+                    <span *ngIf="registerForm.controls['email'].errors?.['pattern']">Please enter a valid email
+                        address !</span>
+                </div>
+            </div>
+
+            <br>
+
+            <h2>Personal Data</h2>
+
+            <div class="text-input">
+                <label for="">First Name:</label>
+                <input name="firstName" formControlName="firstName" type="text">
+                <div class="text-danger"
+                    *ngIf="registerForm.controls['firstName'].invalid && (registerForm.controls['firstName'].touched || registerForm.controls['firstName'].dirty || submitted)">
+                    <span *ngIf="registerForm.controls['firstName'].errors?.['required']">This Is Required !</span>
+                    <span *ngIf="registerForm.controls['firstName'].errors?.['pattern']">Please enter your correct first
+                        name, the first letter must be capitalized !</span>
+                </div>
+            </div>
+            <div class="text-input">
+                <label for="">Last Name:</label>
+                <input name="lastName" formControlName="lastName" type="text">
+                <div class="text-danger"
+                    *ngIf="registerForm.controls['lastName'].invalid && (registerForm.controls['lastName'].touched || registerForm.controls['lastName'].dirty || submitted)">
+                    <span *ngIf="registerForm.controls['lastName'].errors?.['required']">This Is Required !</span>
+                    <span *ngIf="registerForm.controls['lastName'].errors?.['pattern']">Please enter your correct last
+                        name, the first letter must be capitalized !</span>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="text-input">
+                <label for="">Username:</label>
+                <input name="username" formControlName="username" type="text">
+                <div class="text-danger"
+                    *ngIf="registerForm.controls['username'].invalid && (registerForm.controls['username'].touched || registerForm.controls['username'].dirty || submitted)">
+                    <span *ngIf="registerForm.controls['username'].errors?.['required']">This Is Required !</span>
+                    <span *ngIf="registerForm.controls['username'].errors?.['minlength']">Min Length 5 character
+                        !</span>
+                </div>
+            </div>
+            <div class="text-input">
+                <label for="">Password:</label>
+                <input name="password" formControlName="password" type="password">
+                <div class="text-danger"
+                    *ngIf="registerForm.controls['password'].invalid && (registerForm.controls['password'].touched || registerForm.controls['password'].dirty || submitted)">
+                    <span *ngIf="registerForm.controls['password'].errors?.['required']">This Is Required !</span>
+                    <span *ngIf="registerForm.controls['password'].errors?.['minlength']">Min Length 6 character
+                        !</span>
+                </div>
+            </div>
+            <div class="text-input">
+                <label for="">Confirm Password:</label>
+                <input name="confirmPassword" formControlName="confirmPassword" type="password">
+                <div class="text-danger"
+                    *ngIf="registerForm.controls['confirmPassword'].invalid && (registerForm.controls['confirmPassword'].touched || registerForm.controls['confirmPassword'].dirty || submitted)">
+                    <span *ngIf="registerForm.controls['confirmPassword'].errors?.['required']">This Is Required
+                        !</span>
+                    <span *ngIf="registerForm.controls['confirmPassword'].errors?.['mustMatch']">Passwords do not
+                        match !</span>
+                </div>
+            </div>
+            <br>
+            <button type="button" class="register-btn" id="btn" (click)="onSubmit()">Register</button>
+            <button type="button" class="cancel-btn" id="btn" (click)="goToHomePage()">Back To Home Page</button>
+
+        </form>
+    </div>
+</div>

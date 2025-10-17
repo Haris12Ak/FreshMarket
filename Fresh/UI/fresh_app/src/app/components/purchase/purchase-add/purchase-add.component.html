@@ -1,0 +1,76 @@
+@if(data.mode === 'add' && data.purchase == null){
+<h2 mat-dialog-title>Add purchase for client {{data.client.clientFirstLastName}}</h2>
+}@else{
+<h2 mat-dialog-title>Edit purchase for client
+    {{data.client.clientFirstLastName}}</h2>
+}
+<mat-divider></mat-divider>
+<mat-dialog-content>
+    <form [formGroup]="purchaseForm" class="example-form">
+        @if (data.mode === 'edit' && data.purchase != null) {
+        <div class="editInfoContainer">
+            <p class="editInfoLabel">Purchase date:</p>
+            <p class="editInfo">{{data.purchase.purchaseDate | date:'short'}}</p>
+        </div>
+        <div class="editInfoContainer">
+            <p class="editInfoLabel">Product:</p>
+            <p class="editInfo">{{data.purchase.products.name}}</p>
+        </div>
+        <div class="editInfoContainer">
+            <p class="editInfoLabel">Unit:</p>
+            <p class="editInfo">{{data.purchase.products.unit}}</p>
+        </div>
+        <div class="editInfoContainer">
+            <p class="editInfoLabel">Price per unit:</p>
+            <p class="editInfo">{{data.purchase.pricePerUnit}} KM</p>
+        </div>
+        }
+        <p><strong>Quantity: </strong></p>
+        <mat-form-field appearance="fill" class="full-width">
+            <input matInput type="number" min="0" formControlName="quantity">
+            @if(purchaseForm.controls['quantity'].hasError('required')){
+            <mat-error>Quantity is <strong>required !</strong></mat-error>
+            }
+        </mat-form-field>
+
+        <p><strong>Product: </strong></p>
+        <mat-form-field>
+            <mat-select name="productId" formControlName="productId" required
+                [disabled]="data.mode === 'edit' ? true : false">
+                @for (product of products; track product){
+                <mat-option [value]="product.id">{{product.name}} {{product.currentPricePerUnit ?
+                    "(" + product.currentPricePerUnit + " KM)":''}}</mat-option>
+                }
+            </mat-select>
+            @if(purchaseForm.controls['productId'].hasError('required')){
+            <mat-error>Product is <strong>required !</strong></mat-error>
+            }
+        </mat-form-field>
+
+        <p><strong>Payment type: </strong></p>
+        <mat-button-toggle-group name="paymentType" formControlName="paymentType" aria-label="Font Style"
+            [disabled]="data.mode === 'edit' ? true : false">
+            <mat-button-toggle *ngFor="let type of paymentsType"
+                [value]="type">{{paymentTypeLabel(type)}}</mat-button-toggle>
+            @if(purchaseForm.controls['paymentType'].hasError('required')){
+            <mat-error>Payment type is <strong>required !</strong></mat-error>
+            }
+        </mat-button-toggle-group>
+
+        <div *ngIf="purchaseForm.get('paymentType')?.value === PaymentType.Installments" style="width: 100%;">
+            <p><strong>Number of Installments: </strong></p>
+            <mat-form-field appearance="fill" style="width: 50%;">
+                <input matInput type="number" min="1" formControlName="numberOfInstallments"
+                    [disabled]="data.mode === 'edit' ? true : false">
+            </mat-form-field>
+        </div>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button color="warn" (click)="onCancel()"><mat-icon>cancel</mat-icon>Cancel</button>
+    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!purchaseForm.valid">
+        {{data.mode === 'add' ? 'Save' : 'Update'}}
+        <mat-icon>archive</mat-icon>
+    </button>
+</mat-dialog-actions>

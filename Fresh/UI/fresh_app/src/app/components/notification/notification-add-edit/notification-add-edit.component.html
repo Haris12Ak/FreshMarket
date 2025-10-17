@@ -1,0 +1,28 @@
+<div class="navigation-bar-text-display">
+    <p class="appearance main" (click)="cancel()">Notification</p>
+    <p class="appearance">/</p>
+    <p class="appearance">{{isEdit ? 'Edit': 'Add'}}</p>
+</div>
+<form class="example-form" [formGroup]="addNotificationForms" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Title</mat-label>
+        <input matInput name="title" formControlName="title" [errorStateMatcher]="matcher">
+        @if(addNotificationForms.controls['title'].hasError('required')){
+        <mat-error>Title is <strong>required !</strong></mat-error>
+        }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Content</mat-label>
+        <textarea matInput rows="8" name="content" formControlName="content" [errorStateMatcher]="matcher"></textarea>
+        @if(addNotificationForms.controls['content'].hasError('required')){
+        <mat-error>Content is <strong>required !</strong></mat-error>
+        }
+    </mat-form-field>
+
+    <div class="actions">
+        <button mat-raised-button color="primary" type="submit" [disabled]="!addNotificationForms.valid"><mat-icon>archive</mat-icon>{{isEdit ?
+            'Update' : 'Save'}}</button>
+        <button mat-button color="warn" type="button" (click)="cancel()"><mat-icon>cancel</mat-icon>Cancel</button>
+    </div>
+</form>

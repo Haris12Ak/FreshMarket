@@ -1,0 +1,78 @@
+/* You can add global styles to this file, and also import other style files */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body,
+html {
+    width: 100%;
+    height: 100%;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.spinner-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+}
+
+.show-total-item {
+    margin: 15px 0px;
+}
+
+.show-total-item p {
+    letter-spacing: 1.3px;
+    color: rgba(0, 0, 0, 0.75);
+    font-weight: 600;
+    font-size: 1em;
+}
+
+.result-view {
+    font-size: 1.1em;
+    margin: 20px 0px;
+    color: rgba(0, 0, 0, 0.8);
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+mat-paginator {
+    background-color: transparent !important;
+    margin-top: 15px !important;
+}
+
+.navigation-bar-text-display {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 8px;
+}
+
+.navigation-bar-text-display .main {
+    color: rgba(0, 0, 0, 0.45) !important;
+    transition: .3s;
+}
+
+.navigation-bar-text-display .main:hover {
+    cursor: pointer;
+    color: rgba(0, 0, 0, 0.3) !important;
+}
+
+.navigation-bar-text-display .appearance {
+    font-size: 1.5em;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.8);
+}

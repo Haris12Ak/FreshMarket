@@ -1,0 +1,28 @@
+.details-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    box-shadow: rgba(33, 35, 38, 0.4) 0px 10px 10px -10px;
+    padding-bottom: 20px;
+}
+
+#title {
+    color: black;
+    letter-spacing: 1px;
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+#date {
+    font-size: 0.9em;
+    margin-top: 5px;
+    color: rgba(0, 0, 0, 0.8);
+}
+
+#content {
+    margin-top: 20px;
+    font-size: 1.1em;
+    color: rgba(0, 0, 0, 0.8);
+    text-align: justify;
+    line-height: 1.6;
+}

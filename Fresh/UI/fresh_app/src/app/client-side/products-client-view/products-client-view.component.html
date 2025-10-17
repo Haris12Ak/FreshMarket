@@ -1,0 +1,61 @@
+<div *ngIf="loading" class="spinner-container">
+    <mat-spinner></mat-spinner>
+</div>
+
+<div *ngIf="!loading">
+     <div class="navigation-bar-text-display">
+        <p class="appearance">Products</p>
+    </div>
+    <div class="search">
+        <mat-form-field class="no-subscript" id="product-name">
+            <mat-label>Product Name</mat-label>
+            <input matInput [(ngModel)]="search.name">
+        </mat-form-field>
+
+        <mat-form-field class="no-subscript">
+            <mat-label>Product type</mat-label>
+            <mat-select [(ngModel)]="search.productType">
+                @for (producType of productTypes; track producType){
+                <mat-option [value]="producType.name">{{producType.name}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+
+        <div class="buttons">
+            <button mat-icon-button color="primary" matTooltip="Search" (click)="Search()"><mat-icon>search</mat-icon></button>
+            <button mat-icon-button color="warn" matTooltip="Reset filter" (click)="ResetFilter()"><mat-icon>autorenew</mat-icon></button>
+        </div>
+    </div>
+    <div class="container-card" *ngIf="products && products.length > 0; else noProducts">
+        <div *ngFor="let product of products">
+            <mat-card class="example-card" appearance="outlined" matTooltip="Show product details"
+                (click)="showProductDeatils(product)">
+                <mat-card-header>
+                    <mat-card-title>{{product.name}}</mat-card-title>
+                    <mat-card-subtitle>{{product.productType.name}}</mat-card-subtitle>
+                </mat-card-header>
+                <img mat-card-image [src]="getImageSrc(product.image ?? null)" alt="Photo of a Shiba Inu">
+                <mat-card-content>
+                    <div class="mat-card-content-price">
+                        <label>Price per unit:</label>
+                        <p>{{product.currentPricePerUnit}} KM</p>
+                    </div>
+                    <div class="mat-card-content-price">
+                        <label>Unit:</label>
+                        <p>{{product.unit}}</p>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div *ngIf="pagedResult" class="paginator-container">
+            <mat-paginator [length]="pagedResult!.totalItems" [pageSize]="pagedResult!.pageSize"
+                [pageIndex]="pagedResult.currentPage" [pageSizeOptions]="[5, 10, 25]"
+                (page)="onPageChange($event)" aria-label="Select page">
+            </mat-paginator>
+        </div>
+    </div>
+
+    <ng-template #noProducts>
+        <p class="result-view">There are currently no products.</p>
+    </ng-template>
+</div>

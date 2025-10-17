@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>Add price for {{data.name}}</h2>
+<mat-dialog-content>
+  <p><strong>Unit: </strong> {{data.unit}}</p>
+  <form [formGroup]="priceForm" class="example-form">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Price per unit</mat-label>
+      <input matInput type="number" min="0" formControlName="pricePerUnit">
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button color="warn" (click)="onCancel()"><mat-icon>cancel</mat-icon>Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!priceForm.valid">
+    <mat-icon>archive</mat-icon>Save
+  </button>
+</mat-dialog-actions>

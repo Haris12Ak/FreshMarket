@@ -1,0 +1,87 @@
+.example-card {
+  width: 350px;
+  height: fit-content;
+  transition: .3s;
+}
+
+.example-card img {
+  height: 270px;
+  background-size: cover;
+}
+
+.example-card:hover {
+  opacity: .7;
+  cursor: pointer;
+}
+
+.container-card {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: fit-content;
+  float: left;
+  align-items: start;
+  padding-bottom: 20px;
+}
+
+mat-card-subtitle {
+  margin-bottom: 10px;
+}
+
+mat-card-content {
+  margin-top: 10px;
+}
+
+mat-card-content .mat-card-content-price {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+mat-card-content .mat-card-content-price label {
+  letter-spacing: 1px;
+  color: rgba(0, 0, 0, 0.60);
+  font-weight: 600;
+}
+
+mat-card-content .mat-card-content-price p {
+  color: gray;
+  font-weight: 600;
+}
+
+.search {
+    display: flex;
+    gap: 16px;
+    align-items: end;
+    background-color: transparent;
+    margin: 20px 0px;
+}
+
+.search mat-form-field {
+    flex: 1;
+}
+
+.search #product-name {
+    flex: 2;
+}
+
+.buttons {
+    display: flex;
+    gap: 5px;
+}
+
+::ng-deep .no-subscript .mat-mdc-form-field-subscript-wrapper {
+    display: none !important;
+}
+
+::ng-deep .no-subscript .mat-mdc-text-field-wrapper {
+    background-color: rgba(128, 128, 128, 0.05) !important;
+}
+
+.paginator-container {
+  display: flex;
+  justify-content: right;
+  width: 100%;
+  margin-top: 20px;
+}

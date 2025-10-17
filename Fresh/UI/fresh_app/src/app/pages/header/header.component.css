@@ -1,0 +1,16 @@
+.header-content {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    text-align: center;
+}
+
+.header-content p {
+    margin-right: 20px;
+    font-size: 1.1em;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.664);
+    text-shadow: 2px 2px 4px #9e9e9e;
+    letter-spacing: 1px;
+}

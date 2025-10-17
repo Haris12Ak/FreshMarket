@@ -1,0 +1,51 @@
+<div class="logo">
+    <i class="fa fa-home"></i>
+    <p *ngIf="company">{{company.companyName || 'unkonwn'}}</p>
+</div>
+<div class="side-menu">
+    <ul>
+        <li *ngIf="hasRole('admin')">
+            <a href="#" routerLink="/main-page/dashboard" routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"><i class="fa fa-fw fa-bars"></i>Dashboard</a>
+        </li>
+        <li *ngIf="hasRole('client')">
+            <a href="#" routerLink="/main-page/dashboard-view" routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"><i class="fa fa-fw fa-bars"></i>Dashboard</a>
+        </li>
+        <li *ngIf="hasRole('admin')">
+            <a href="#" routerLink="/main-page/clients" routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"><i class="fa fa-fw fa-users"></i>Clients</a>
+        </li>
+        <li *ngIf="hasRole('admin')">
+            <a href="#" routerLink="/main-page/products" routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"><i class="fa fa-fw fa-th-list"></i>Products</a>
+        </li>
+        <li *ngIf="hasRole('client')">
+            <a href="#" routerLink="/main-page/products-list" routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"><i class="fa fa-fw fa-th-list"></i>Products</a>
+        </li>
+        <li *ngIf="hasRole('admin')">
+            <a href="#" routerLink="/main-page/purchase" routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"><i class="fa fa-fw fa-line-chart"></i>Purchase</a>
+        </li>
+        <li *ngIf="hasRole('client')">
+            <a href="#" routerLink="/main-page/purchase-list" routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"><i class="fa fa-fw fa-line-chart"></i>Purchase</a>
+        </li>
+        <li *ngIf="hasRole('admin')">
+            <a href="#" routerLink="/main-page/notification" routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }">
+                <i class="fa fa-fw fa-bell-o"></i>Notification</a>
+        </li>
+        <li *ngIf="hasRole('client')">
+            <a href="#" routerLink="/main-page/notification-list" routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                [matBadge]="(notificationService.newNotificationCount$ | async) || null"><i
+                    class="fa fa-fw fa-bell-o"></i>Notification</a>
+        </li>
+        <li *ngIf="hasRole('admin') || hasRole('client')">
+            <a href="#" routerLink="/main-page/profile" routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"><i class="fa fa-fw fa-user-circle"></i>Profile</a>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,45 @@
+.mat-mdc-header-row {
+    color: black;
+    font-weight: 600;
+}
+
+.mat-mdc-button {
+    background-color: rgb(167, 166, 166);
+}
+
+.actions-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    align-items: center;
+}
+
+.mat-column-title {
+    min-width: 200px;
+}
+
+.mat-column-createdAt {
+    min-width: 200px;
+}
+
+.content-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    line-height: 1.4em;
+}
+
+.mat-column-actions {
+    min-width: 250px;
+}
+
+.mat-column-title,
+.mat-column-createdAt,
+.mat-column-content,
+.mat-column-actions {
+    padding: 8px;
+}

@@ -1,0 +1,77 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    background-color: white;
+}
+
+th,
+td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+tbody tr {
+    transition: .3s;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.container-1 {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.container-1 .content {
+    flex: 1;
+    background-color: white;
+    padding: 20px;
+}
+
+.container-1 .content label {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: grey;
+}
+
+.container-1 .content p {
+    font-size: 2.5em;
+    font-weight: 700;
+    padding: 10px 0px;
+    color: rgba(0, 0, 0, 0.8);
+}
+
+.container-2 {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 20px;
+}
+
+.container-2 .left {
+    width: 50%;
+}
+
+.container-2 .right {
+    width: 50%;
+}
+
+.line-chart {
+    background-color: white;
+    padding: 10px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.container-2 .right .space {
+    margin-top: 0px;
+}
+
+.container-2 .right .pie {
+    height: 450px;
+}
