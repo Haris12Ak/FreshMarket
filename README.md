@@ -45,6 +45,12 @@ git clone https://github.com/Haris12Ak/FreshMarket.git
 Go to the Angular project folder and install all required packages:
 
 ```bash
+cd Fresh\UI\fresh_app
+```
+
+---
+
+```bash
 npm install
 ```
 
