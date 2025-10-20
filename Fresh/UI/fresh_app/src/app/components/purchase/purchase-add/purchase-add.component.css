@@ -1,0 +1,26 @@
+mat-dialog-content form {
+    display: flex;
+    flex-direction: column;
+}
+
+mat-form-field {
+    margin-bottom: 10px;
+}
+
+mat-button-toggle-group {
+    margin-bottom: 20px;
+    width: fit-content;
+}
+
+.editInfoLabel {
+    flex: 1;
+}
+
+.editInfo {
+    flex: 2;
+}
+
+.editInfoContainer {
+    display: flex;
+    margin-bottom: 10px;
+}

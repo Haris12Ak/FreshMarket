@@ -1,0 +1,108 @@
+{
+  "realm": "fresh",
+  "enabled": true,
+  "roles": {
+    "realm": [
+      {
+        "name": "admin",
+        "description": "Administrator role",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "fresh"
+      },
+      {
+        "name": "client",
+        "description": "Client role",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "fresh"
+      }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "api-client",
+      "redirectUris": ["http://localhost:44301/swagger/oauth2-redirect.html"],
+      "rootUrl": "http://localhost:44301",
+      "baseUrl": "http://localhost:44301",
+      "publicClient": true,
+      "protocol": "openid-connect",
+      "fullScopeAllowed": true,
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "defaultRoles": ["manage-account", "view-profile"],
+      "webOrigins": ["*"],
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": true,
+      "defaultClientScopes": ["roles", "openid", "profile"],
+      "protocolMappers": [
+        {
+          "name": "mapper-roles",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "multivalued": "true",
+            "claim.name": "roles",
+            "jsonType.label": "String",
+            "userinfo.token.claim": "true",
+            "id.token.claim": "true",
+            "access.token.claim": "true"
+          }
+        },
+        {
+          "name": "audience-api-client",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.client.audience": "api-client",
+            "id.token.claim": "true",
+            "access.token.claim": "true"
+          }
+        }
+      ]
+    },
+    {
+      "clientId": "angular-client",
+      "redirectUris": ["http://localhost:4200/*"],
+      "rootUrl": "http://localhost:4200",
+      "baseUrl": "/",
+      "publicClient": true,
+      "protocol": "openid-connect",
+      "fullScopeAllowed": true,
+      "enabled": true,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "webOrigins": ["http://localhost:4200"],
+      "protocolMappers": [
+        {
+          "name": "mapper-roles",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "multivalued": "true",
+            "claim.name": "roles",
+            "jsonType.label": "String",
+            "userinfo.token.claim": "true",
+            "id.token.claim": "true",
+            "access.token.claim": "true"
+          }
+        },
+        {
+          "name": "audience-angular-client",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.client.audience": "angular-client",
+            "id.token.claim": "true",
+            "access.token.claim": "true"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+.logo {
+    border-bottom: 2px solid rgb(112, 112, 112);
+    height: 10%;
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+
+.logo i {
+    margin-right: 10px;
+    font-size: 1.5em;
+    color: white;
+    text-shadow: 2px 2px 4px #a0a0a0;
+}
+
+.logo p {
+    font-family: "Lucida Console", "Courier New", monospace;
+    font-size: 1.2em;
+    font-weight: 500;
+    color: white;
+    text-shadow: 2px 2px 4px #a3a3a3;
+}
+
+.side-menu {
+    padding: 30px;
+}
+
+.side-menu ul li a {
+    text-decoration: none;
+    font-size: 1.5em;
+    color: whitesmoke;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 15px 30px;
+}
+
+.side-menu ul li a.active {
+    border-bottom: 1px solid rgba(245, 245, 245, 0.3);
+    background-color: transparent;
+    color: grey;
+}
+
+.side-menu ul li {
+    list-style: none;
+    margin-bottom: 15px;
+}
+
+.side-menu ul li:hover {
+    cursor: pointer;
+    background-color: rgba(53, 58, 64, 0.89);
+    transition: all .4s ease;
+    border-bottom: 1px solid rgba(245, 245, 245, 0.3);
+}
+
+.side-menu ul li a:hover {
+    color: grey;
+}
+
+.side-menu ul li a i {
+    margin-right: 10px;
+}

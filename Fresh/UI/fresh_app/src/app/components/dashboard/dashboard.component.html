@@ -1,0 +1,75 @@
+<div *ngIf="loading" class="spinner-container">
+    <mat-spinner></mat-spinner>
+</div>
+
+<div *ngIf="!loading">
+    <div class="navigation-bar-text-display">
+        <p class="appearance">Dashboard</p>
+    </div>
+    <div class="container-1">
+        <div class="content">
+            <label>Clients</label>
+            <p>{{data?.totalClients}}</p>
+        </div>
+        <div class="content">
+            <label>Products</label>
+            <p>{{data?.totalProducts}}</p>
+        </div>
+        <div class="content">
+            <label>Purchases</label>
+            <p>{{data?.totalPurchases}}</p>
+        </div>
+        <div class="content">
+            <label>Paid / Unpaid</label>
+            <p>{{ progress | number:'1.0-0' }} %</p>
+            <mat-progress-bar mode="determinate" [value]="progress"></mat-progress-bar>
+        </div>
+    </div>
+    @if (monthlyPurchase.length > 0 && purchasedProducts.length > 0 && paymentType.length > 0 && topClients.length > 0)
+    {
+    <div class="container-2">
+        <div class="left">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price per unit</th>
+                        <th>Unit</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody *ngFor="let product of purchasedProducts">
+                    <tr>
+                        <td>{{product.productName}}</td>
+                        <td>{{product.quantity}}</td>
+                        <td>${{product.pricePerUnit}}</td>
+                        <td>{{product.unit}}</td>
+                        <td>${{product.total}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="line-chart">
+                <canvas baseChart [data]="lineChartProductsData" [options]="lineChartProductsOptions" chartType="line">
+                </canvas>
+            </div>
+
+            <div class="line-chart">
+                <canvas baseChart [data]="lineChartClientsData" [options]="lineChartClientsOptions" chartType="line">
+                </canvas>
+            </div>
+        </div>
+        <div class="right">
+            <div class="line-chart space">
+                <canvas baseChart [data]="lineChartMonthlyData" [options]="lineChartMonthlyOptions" chartType="line">
+                </canvas>
+            </div>
+            <div class="line-chart pie">
+                <canvas baseChart [data]="pieChartPaymentsData" [options]="pieChartPaymentsOptions" [type]="'pie'">
+                </canvas>
+            </div>
+        </div>
+    </div>
+    }
+</div>

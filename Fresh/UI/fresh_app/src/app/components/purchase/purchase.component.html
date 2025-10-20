@@ -1,0 +1,220 @@
+<div *ngIf="loading" class="spinner-container">
+    <mat-spinner></mat-spinner>
+</div>
+
+<div *ngIf="!loading">
+    <div class="navigation-bar-text-display">
+        <p class="appearance">Purchase</p>
+    </div>
+    <div style="width: 100%; display: flex; justify-content: end; align-items: end;">
+        <button class="csv-button" (click)="downloadCsv()"><mat-icon>download</mat-icon>Download CSV file</button>
+    </div>
+    <div class="search">
+        <mat-form-field class="no-subscript" id="client">
+            <mat-label>Client</mat-label>
+            <input matInput placeholder="First and Last name" [(ngModel)]="searchClient.firstNameAndLastName">
+        </mat-form-field>
+
+        <div class="buttons">
+            <button mat-icon-button color="primary" matTooltip="Search client"
+                (click)="Search()"><mat-icon>search</mat-icon></button>
+            <button mat-icon-button color="warn" matTooltip="Reset filter"
+                (click)="ResetFilter()"><mat-icon>autorenew</mat-icon></button>
+        </div>
+    </div>
+    @if (clientPurchases && clientPurchases.length > 0) {
+    <mat-expansion-panel *ngFor="let client of clientPurchases" [expanded]="isPanelOpen(client.clientId)"
+        (opened)="onPanelOpened(client)" (closed)="onPanelClosed(client.clientId)">
+        <mat-expansion-panel-header>
+            <mat-panel-title> {{client.clientFirstLastName}}</mat-panel-title>
+            <mat-panel-description>
+                <span *ngIf="!isPanelOpen(client.clientId)">
+                    Show purchases
+                </span>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div class="client-info">
+            <div>
+                <label>Email:</label>
+                <p>{{client.clientEmail}}</p>
+            </div>
+            <div *ngIf="client.clientPhone">
+                <label>Phone:</label>
+                <p>{{client.clientPhone}}</p>
+            </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="container">
+            <div class="container-left">
+                <div class="content">
+                    <label>Total purchases:</label>
+                    <p>{{client.totalPurchases}}</p>
+                </div>
+                <div class="content">
+                    <label>Total quantity:</label>
+                    <p>{{client.totalQuantity}}</p>
+                </div>
+                <div class="content">
+                    <label>Total earnings:</label>
+                    <p>{{client.totalEarnings}} KM</p>
+                </div>
+            </div>
+            <div class="container-right">
+                <div class="content">
+                    <label style="color: rgba(0, 104, 0, 0.6);">Total paid:</label>
+                    <p style="color: rgba(0, 104, 0, 0.6);">{{client.totalPaid}} KM</p>
+                </div>
+                <div class="content">
+                    <label style="color: rgba(128, 0, 0, 0.6);">Total debt:</label>
+                    <p style="color: rgba(128, 0, 0, 0.6);">{{client.totalDebt}} KM</p>
+                </div>
+            </div>
+        </div>
+        <div class="container-filtered" *ngIf="purchaseFilteredData && purchaseFilteredData != undefined">
+            <span>Filtered purchase data</span>
+            <div style="display: flex; flex-direction: row; gap: 20px;">
+                <label class="filtered-result-text"><strong>Filtered data by:</strong></label>
+                <label *ngIf="client.searchPurchases.productType != undefined" class="filtered-result-text">Product
+                    type: {{client.searchPurchases.productType}}</label>
+                <label *ngIf="client.searchPurchases.dateFrom != undefined" class="filtered-result-text">Date From:
+                    {{client.searchPurchases.dateFrom | date: 'mediumDate'}}</label>
+                <label *ngIf="client.searchPurchases.dateTo != undefined" class="filtered-result-text">Date To:
+                    {{client.searchPurchases.dateTo | date: 'mediumDate'}}</label>
+            </div>
+            <mat-divider></mat-divider>
+            <div style="display: flex;">
+                <div class="container-left">
+                    <div class="content">
+                        <label>Total purchases:</label>
+                        <p>{{purchaseFilteredData.totalPurchases}}</p>
+                    </div>
+                    <div class="content">
+                        <label>Total quantity:</label>
+                        <p>{{purchaseFilteredData.totalQuantity}}</p>
+                    </div>
+                    <div class="content">
+                        <label>Total earnings:</label>
+                        <p>{{purchaseFilteredData.totalEarnings}} KM</p>
+                    </div>
+                </div>
+                <div class="container-right">
+                    <div class="content">
+                        <label style="color: rgba(0, 104, 0, 0.6);">Total paid:</label>
+                        <p style="color: rgba(0, 104, 0, 0.6);">{{purchaseFilteredData.totalPaid}} KM</p>
+                    </div>
+                    <div class="content">
+                        <label style="color: rgba(128, 0, 0, 0.6);">Total debt:</label>
+                        <p style="color: rgba(128, 0, 0, 0.6);">{{purchaseFilteredData.totalDebt}} KM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="loadingPurchases" class="spinner-container">
+            <mat-spinner></mat-spinner>
+        </div>
+        <div *ngIf="!loadingPurchases">
+            <div class="add-content">
+                <p class="purchase-text">Purchases</p>
+                <button mat-raised-button (click)="AddPurchase(client)"><mat-icon>add</mat-icon>Add Purchase</button>
+            </div>
+            <div class="search">
+                <mat-form-field class="no-subscript">
+                    <mat-label>Product type</mat-label>
+                    <mat-select [(ngModel)]="client.searchPurchases.productType">
+                        @for (producType of productTypes; track producType){
+                        <mat-option [value]="producType.name">{{producType.name}}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="no-subscript">
+                    <mat-label>Date From</mat-label>
+                    <input matInput [matDatepicker]="pickerFrom" [(ngModel)]="client.searchPurchases.dateFrom"
+                        name="dateFrom" placeholder="Choose a date">
+                    <mat-datepicker-toggle matIconSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerFrom></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field class="no-subscript">
+                    <mat-label>Date To</mat-label>
+                    <input matInput [matDatepicker]="pickerTo" [(ngModel)]="client.searchPurchases.dateTo" name="dateTo"
+                        placeholder="Choose a date">
+                    <mat-datepicker-toggle matIconSuffix [for]="pickerTo"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerTo></mat-datepicker>
+                </mat-form-field>
+
+                <div class="buttons">
+                    <button mat-icon-button color="primary" matTooltip="Search purchase"
+                        (click)="SearchPurchases(client)"><mat-icon>search</mat-icon></button>
+                    <button mat-icon-button color="warn" matTooltip="Reset filter"
+                        (click)="ResetFilterPurchases(client)"><mat-icon>autorenew</mat-icon></button>
+                </div>
+            </div>
+            <table *ngIf="client.purchases && client.purchases.length > 0; else noPurchases">
+                <thead>
+                    <tr>
+                        <th>Product name</th>
+                        <th>Product type</th>
+                        <th>Image</th>
+                        <th>Unit</th>
+                        <th>Price per unit</th>
+                        <th>Quantity</th>
+                        <th>Total amount</th>
+                        <th>Purchase date</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let purchase of client.purchases">
+                        <td>{{ purchase.products.name }}</td>
+                        <td>{{ purchase.products.productType.name }}</td>
+                        <td><img alt="Product Image" [src]="getImageSrc(purchase.products.image ?? null)" width="50"
+                                height="50" /></td>
+                        <td>{{ purchase.products.unit }}</td>
+                        <td>{{ purchase.pricePerUnit}} KM</td>
+                        <td>{{ purchase.quantity }}</td>
+                        <td>{{ purchase.totalAmount}} KM</td>
+                        <td>{{ purchase.purchaseDate | date:'mediumDate' }}</td>
+                        <td>
+                            <p [ngClass]="{'paid': isPurchasePaid(purchase), 'not-paid': !isPurchasePaid(purchase)}">
+                                {{isPurchasePaid(purchase) ? 'Paid' : 'Not Paid'}}
+                            </p>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button mat-stroked-button
+                                    (click)="downloadPdf(purchase.id)"><mat-icon>picture_as_pdf</mat-icon>Report</button>
+                                <button mat-icon-button matTooltip="Details"
+                                    (click)="ShowDetails(purchase.id, client.clientId)"><mat-icon>read_more</mat-icon></button>
+                                <button mat-icon-button color="primary" matTooltip="Edit"
+                                    (click)="EditPurchase(client, purchase)"><mat-icon>edit</mat-icon></button>
+                                <button mat-icon-button color="warn" matTooltip="Delete"
+                                    (click)="DeletePurchase(purchase.id)"><mat-icon>delete_forever</mat-icon></button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div *ngIf="client.pagedPurchases">
+                <mat-paginator [length]="client.pagedPurchases.totalItems" [pageSize]="client.pagedPurchases.pageSize"
+                    [pageIndex]="client.pagedPurchases.currentPage" [pageSizeOptions]="[5, 10, 25]"
+                    (page)="onPageChangePurchases($event, client)" aria-label="Select page">
+                </mat-paginator>
+            </div>
+            <ng-template #noPurchases>
+                <p class="result-view">No data displayed</p>
+            </ng-template>
+        </div>
+    </mat-expansion-panel>
+    <div *ngIf="pagedResultClient">
+        <mat-paginator [length]="pagedResultClient!.totalItems" [pageSize]="pagedResultClient!.pageSize"
+            [pageIndex]="pagedResultClient.currentPage" [pageSizeOptions]="[5, 10, 25]" (page)="onPageChange($event)"
+            aria-label="Select page">
+        </mat-paginator>
+    </div>
+    } @else{
+    <p class="result-view">No data set</p>
+    }
+</div>

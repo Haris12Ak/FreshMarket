@@ -1,0 +1,106 @@
+<div *ngIf="loading" class="spinner-container">
+    <mat-spinner></mat-spinner>
+</div>
+
+<div *ngIf="!loading">
+    <div class="navigation-bar-text-display">
+        <p class="appearance">Products</p>
+    </div>
+    <button mat-raised-button (click)="goToAddProduct()"><mat-icon>add</mat-icon> Add Product</button>
+    <div class="search">
+        <mat-form-field class="no-subscript" id="product-name">
+            <mat-label>Product Name</mat-label>
+            <input matInput [(ngModel)]="search.name">
+        </mat-form-field>
+
+        <mat-form-field class="no-subscript">
+            <mat-label>Product type</mat-label>
+            <mat-select [(ngModel)]="search.productType">
+                @for (producType of productTypes; track producType){
+                <mat-option [value]="producType.name">{{producType.name}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="no-subscript">
+            <mat-label>Aktivan</mat-label>
+            <mat-select [(ngModel)]="search.isActive">
+                @for (item of isActiveList; track item){
+                <mat-option [value]="item.value">{{item.name}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+
+        <div class="buttons">
+            <button mat-icon-button color="primary" matTooltip="Search"
+                (click)="Search()"><mat-icon>search</mat-icon></button>
+
+            <button mat-icon-button color="warn" matTooltip="Reset filter"
+                (click)="ResetFilter()"><mat-icon>autorenew</mat-icon></button>
+        </div>
+    </div>
+    <table mat-table [dataSource]="products" class="mat-elevation-z8">
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let product"> {{product.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="image">
+            <th mat-header-cell *matHeaderCellDef> Image </th>
+            <td mat-cell *matCellDef="let product" style="padding: 10px;">
+                <img alt="Product Image" [src]="getImageSrc(product.image)" width="50" height="50">
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="currentProductPrice">
+            <th mat-header-cell *matHeaderCellDef> Current price </th>
+            <td mat-cell *matCellDef="let product"> {{product.currentPricePerUnit != null ? product.currentPricePerUnit
+                : '
+                - '}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="unit">
+            <th mat-header-cell *matHeaderCellDef> Unit </th>
+            <td mat-cell *matCellDef="let product"> {{product.unit}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="productType">
+            <th mat-header-cell *matHeaderCellDef> Product type </th>
+            <td mat-cell *matCellDef="let product"> {{product.productType.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="isActive">
+            <th mat-header-cell *matHeaderCellDef> Active </th>
+            <td mat-cell *matCellDef="let product"> {{product.isActive ? 'Yes' : 'No'}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let product">
+                <div class="actions-buttons">
+                    <button *ngIf="product.currentPricePerUnit == null" mat-stroked-button
+                        (click)="AddProductPrice(product)"><mat-icon>add</mat-icon> Add product price</button>
+                    <button mat-icon-button color="basic" matTooltip="Details" (click)="goToDetailsProduct(product)">
+                        <mat-icon>read_more</mat-icon>
+                    </button>
+                    <button mat-icon-button color="primary" matTooltip="Edit" (click)="goToEditProduct(product)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" matTooltip="Delete" (click)="deleteProduct(product.id)">
+                        <mat-icon>delete_forever</mat-icon>
+                    </button>
+                </div>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <div *ngIf="pagedResult">
+        <mat-paginator [length]="pagedResult!.totalItems" [pageSize]="pagedResult!.pageSize"
+            [pageIndex]="pagedResult.currentPage" [pageSizeOptions]="[5, 10, 25]" (page)="onPageChange($event)"
+            aria-label="Select page">
+        </mat-paginator>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+.container {
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 20px;
+    background-color: rgba(128, 128, 128, 0.08);
+    box-shadow: rgba(33, 35, 38, 0.4) 0px 10px 10px -10px;
+    transition: .3s;
+}
+
+.container:hover {
+    background-color: rgba(128, 128, 128, 0.3);
+    cursor: pointer;
+}
+
+.container h3 {
+    letter-spacing: 1px;
+    color: rgba(0, 0, 0, 0.80);
+}
+
+#date {
+    margin: 3px 0px 15px 0px;
+    font-size: 0.9em;
+    color: rgba(0, 0, 0, 0.8);
+    font-weight: 500;
+}
+
+#content {
+    font-size: 1.1em;
+    color: rgba(0, 0, 0, 0.80);
+    font-weight: 500;
+    text-align: justify;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
+}

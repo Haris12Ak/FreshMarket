@@ -1,0 +1,123 @@
+.background {
+    background-image: url('../../../assets/images/mushrooms.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+}
+
+.overlay {
+    background-color: rgba(0, 0, 0, 0.25);
+    /* dark overlay for contrast */
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    color: white;
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.header-left {
+    max-width: 70%;
+    text-align: left;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.login-btn {
+    padding: 10px 20px;
+    background-color: #ffffff;
+    font-size: 1.1em;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    color: #007b5e;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.login-btn:hover {
+    background-color: #e2e2e2;
+    cursor: pointer;
+}
+
+.header-left h1 {
+    font-size: 38px;
+    margin-bottom: 15px;
+    letter-spacing: 0.1rem;
+    font-weight: 600;
+}
+
+.header-left p {
+    font-size: 18px;
+    letter-spacing: 0.1rem;
+    font-weight: 400;
+}
+
+.content {
+    z-index: 2;
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.description-box {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 30px 40px;
+    border-radius: 10px;
+    max-width: 700px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.description-box h2 {
+    margin-bottom: 15px;
+    font-size: 28px;
+    color: #2e7d32;
+}
+
+.description-box p {
+    font-size: 18px;
+    color: #333;
+}
+
+.register-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 15px 30px;
+    font-size: 16px;
+    background-color: #388e3c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.register-btn:hover {
+    background-color: #2e7d32;
+}

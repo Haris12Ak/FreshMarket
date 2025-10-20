@@ -1,0 +1,44 @@
+.mat-mdc-header-row {
+    color: black;
+    font-weight: 600;
+}
+
+.mat-mdc-button {
+    background-color: rgb(167, 166, 166);
+}
+
+.search {
+    display: flex;
+    gap: 16px;
+    align-items: end;
+    background-color: transparent;
+    margin: 20px 0px;
+}
+
+.search mat-form-field {
+    flex: 1;
+}
+
+.search #product-name {
+    flex: 2;
+}
+
+.buttons {
+    display: flex;
+    gap: 5px;
+}
+
+::ng-deep .no-subscript .mat-mdc-form-field-subscript-wrapper {
+    display: none !important;
+}
+
+::ng-deep .no-subscript .mat-mdc-text-field-wrapper {
+    background-color: rgba(128, 128, 128, 0.05) !important;
+}
+
+.actions-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    align-items: center;
+}

@@ -1,0 +1,108 @@
+button {
+    padding: 5px 20px;
+    background-color: blue;
+    color: white;
+}
+
+#main-page {
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+}
+
+#registration-page {
+    background-color: white;
+    width: 50%;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    max-height: 87%;
+    overflow-y: scroll;
+    scrollbar-color: rgba(128, 128, 128, 0.5) transparent;
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
+}
+
+#registration-page h2 {
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.750);
+    margin-top: 25px;
+    padding-bottom: 10px;
+    padding-left: 5px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.300);
+}
+
+#registration-page h1 {
+    color: rgba(0, 0, 0, 0.750);
+    letter-spacing: 1px;
+}
+
+form {
+    margin-top: 20px;
+}
+
+.text-input {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.text-input input {
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px; 
+    padding: 7px;
+    font-size: 1em;
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.text-input input:hover {
+    background-color: whitesmoke;
+    transition: all .2s ease-in;
+}
+
+.text-input label {
+    font-size: 1em;
+    font-weight: 500;
+    margin-left: 10px;
+    color: rgba(0, 0, 0, 0.750);
+}
+
+.text-input input:focus {
+    background-color: rgba(220, 220, 220, 0.5);
+}
+
+#btn {
+    width: 100%;
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 1.2em;
+    border: none;
+    letter-spacing: 1px;
+}
+
+#btn:hover {
+    opacity: .7;
+    cursor: pointer;
+    transition: all .2s ease-in;
+}
+
+.register-btn {
+    background-color: #388e3c;
+}
+
+.cancel-btn {
+    background-color: rgb(179, 179, 179);
+}
+
+.text-danger {
+    color: rgb(180, 34, 34);
+    margin-left: 10px;
+    margin-bottom: 10px;
+    margin-top: 8px;
+    font-size: 0.9em;
+}

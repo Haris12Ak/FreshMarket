@@ -1,0 +1,64 @@
+<div *ngIf="loading" class="spinner-container">
+    <mat-spinner></mat-spinner>
+</div>
+
+<div *ngIf="!loading">
+    <div class="navigation-bar-text-display">
+        <p class="appearance">Notification</p>
+    </div>
+    <button mat-raised-button (click)="goToAddNotification()"><mat-icon>add</mat-icon> Add Notification</button>
+    <br>
+    <br>
+    <div *ngIf="notifications.data && notifications.data.length > 0; else noNotifications">
+        <table mat-table [dataSource]="notifications" class="mat-elevation-z8">
+            <ng-container matColumnDef="title">
+                <th mat-header-cell *matHeaderCellDef> Title </th>
+                <td mat-cell *matCellDef="let notification"> {{notification.title}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="content">
+                <th mat-header-cell *matHeaderCellDef> Content </th>
+                <td mat-cell *matCellDef="let notification">
+                    <div class="content-text">
+                        {{notification.content}}
+                    </div>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="createdAt">
+                <th mat-header-cell *matHeaderCellDef> Created </th>
+                <td mat-cell *matCellDef="let notification"> {{notification.createdAt | date:'short'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> </th>
+                <td mat-cell *matCellDef="let notification">
+                    <div class="actions-buttons">
+                        <button mat-icon-button matTooltip="Details" (click)="Details(notification)">
+                            <mat-icon>read_more</mat-icon>
+                        </button>
+                        <button mat-icon-button color="primary" matTooltip="Edit" (click)="goToAddNotification(notification.id)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-icon-button color="warn" matTooltip="Delete" (click)="Delete(notification.id)">
+                            <mat-icon>delete_forever</mat-icon>
+                        </button>
+                    </div>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <div *ngIf="pagedResult">
+            <mat-paginator [length]="pagedResult!.totalItems" [pageSize]="pagedResult!.pageSize"
+                [pageIndex]="pagedResult.currentPage" [pageSizeOptions]="[5, 10, 25]" (page)="onPageChange($event)"
+                aria-label="Select page">
+            </mat-paginator>
+        </div>
+    </div>
+
+    <ng-template #noNotifications>
+        <p class="result-view">There are currently no notifications.</p>
+    </ng-template>
+</div>

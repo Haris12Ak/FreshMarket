@@ -1,0 +1,10 @@
+<div class="navigation-bar-text-display">
+    <p class="appearance main" (click)="cancel()">Notification</p>
+    <p class="appearance">/</p>
+    <p class="appearance">Details</p>
+</div>
+<div class="details-container">
+    <p id="title">{{notification!.title}}</p>
+    <p id="date">{{notification?.createdAt | date:'dd MMM yyyy HH:mm'}}</p>
+    <p id="content">{{notification!.content}}</p>
+</div>

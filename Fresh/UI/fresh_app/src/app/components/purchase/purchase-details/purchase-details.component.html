@@ -1,0 +1,130 @@
+<div *ngIf="loading" class="spinner-container">
+    <mat-spinner></mat-spinner>
+</div>
+
+<div *ngIf="!loading">
+    <div class="navigation-bar-text-display">
+        <p class="appearance main" (click)="cancel()">Purchase</p>
+        <p class="appearance">/</p>
+        <p class="appearance">Details</p>
+    </div>
+    <div class="client-container">
+        <span>Client</span>
+        <div class="content">
+            <label>First and Last name:</label>
+            <p>{{purchase?.clients?.firstName}} {{purchase?.clients?.lastName?? ""}}</p>
+        </div>
+        <div class="content space">
+            <label>Email:</label>
+            <p>{{purchase?.clients?.email}}</p>
+        </div>
+        <div class="content" *ngIf="purchase?.clients?.phone">
+            <label>Phone:</label>
+            <p>{{purchase?.clients?.phone}}</p>
+        </div>
+    </div>
+
+    <div class="product-container">
+        <span>Product</span>
+        <div class="left-container">
+            <img alt="Product Image" [src]="getImageSrc(purchase?.products?.image ?? null)">
+        </div>
+
+        <div class="right-container">
+            <div class="content">
+                <label>Name:</label>
+                <p>{{purchase?.products?.name}}</p>
+            </div>
+            <div class="content space">
+                <label>Product type:</label>
+                <p>{{purchase?.products?.productType?.name}}</p>
+            </div>
+            <div class="content">
+                <label>Price:</label>
+                <p>{{purchase?.pricePerUnit}} KM</p>
+            </div>
+            <div class="content space">
+                <label>Unit:</label>
+                <p>{{purchase?.products?.unit}}</p>
+            </div>
+            <div class="content">
+                <label>Active:</label>
+                <p>{{purchase?.products?.isActive ? 'Yes' : 'No'}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="purchase-container">
+        <span>Purchase</span>
+        <div class="left-container">
+            <div class="content">
+                <label>Purchase date:</label>
+                <p>{{purchase?.purchaseDate | date:'MMM d, y, h:mm a'}}</p>
+            </div>
+
+            <div class="content space">
+                <label>Quantity:</label>
+                <p>{{purchase?.quantity}}</p>
+            </div>
+            <div class="content">
+                <label>Price per unit:</label>
+                <p>{{purchase?.pricePerUnit}}</p>
+            </div>
+
+            <div class="content space">
+                <label>Total Amount:</label>
+                <p>{{purchase?.totalAmount}} KM</p>
+            </div>
+
+            <div class="content">
+                <label>Payment type:</label>
+                <p>{{purchase!.paymentType}}</p>
+            </div>
+
+            <div class="content space">
+                <label>Paid:</label>
+                <p [ngClass]="{'paid': isPurchasePaid(purchase!), 'not-paid': !isPurchasePaid(purchase!)}">
+                    {{isPurchasePaid(purchase!) ? 'Yes' : 'No'}}</p>
+            </div>
+
+            <div class="content" *ngIf="purchase?.numberOfInstallments" style="padding-bottom: 20px;">
+                <label>Namber of installments:</label>
+                <p>{{purchase?.numberOfInstallments}}</p>
+            </div>
+
+            <div *ngIf="hasRole('admin')" style="display: flex; justify-content: flex-end; margin: 0px 20px 20px 0px">
+                <button mat-stroked-button color="primary" class="payment-button" *ngIf="!isPurchasePaid(purchase!)"
+                    (click)="immediatePayment(purchase!)"><mat-icon>payments</mat-icon>Pay immediately</button>
+            </div>
+
+            <div class="dept" *ngIf="!isPurchasePaid(purchase!)">
+                <label>Debt:</label>
+                <p>{{getRemainingDebt(purchase!)}} KM</p>
+            </div>
+
+        </div>
+
+        <div class="right-container">
+            <span>Payment</span>
+            <div *ngFor="let pay of purchase!.payments">
+                <div class="content">
+                    <label>Payment date:</label>
+                    <p>{{pay.paymentDate | date:'MMM d, y'}}</p>
+                </div>
+
+                <div class="content space">
+                    <label>Amount:</label>
+                    <p>{{pay.amount}} KM</p>
+                </div>
+
+                <div class="content">
+                    <label>Final payment:</label>
+                    <p [ngClass]="{'paid': pay.isFinalPayment, 'not-paid': !pay.isFinalPayment}">{{pay.isFinalPayment ?
+                        'Yes' : 'No'}}</p>
+                </div>
+
+                <mat-divider *ngIf="purchase?.numberOfInstallments"></mat-divider>
+            </div>
+        </div>
+    </div>
+</div>
