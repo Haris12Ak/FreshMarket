@@ -37,7 +37,7 @@ The Dashboard page provides an overview of all relevant information for both adm
 ### 1. Clone the repository:
 
 ```bash
-git clone https://github.com/Nodi123Or/Fresh.git
+git clone https://github.com/Haris12Ak/FreshMarket.git
 ```
 
 ### 2. Install Frontend Dependencies
